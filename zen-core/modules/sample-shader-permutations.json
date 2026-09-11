@@ -1,0 +1,11 @@
+{
+  "stage": "compute",
+  "macro_a": "ENABLE_DEFERRED",
+  "macro_b": "USE_BINDLESS",
+  "permutations": [
+    [false, false],
+    [true, false],
+    [false, true],
+    [true, true]
+  ]
+}

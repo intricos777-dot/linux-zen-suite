@@ -1,0 +1,30 @@
+[Unit]
+Description=Zen Vulkan Shader Cache Pre-warmer
+After=graphical-session.target
+Wants=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/node /opt/zen-core/modules/vulkan-shader-cache.js
+Environment=ZEN_VK_CACHE_DIR=/var/cache/zen/shader-cache
+Environment=ZEN_VK_CACHE_MAX_MB=512
+User=zen
+Group=zen
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/cache/zen /var/log/zen
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictNamespaces=true
+KillMode=mixed
+
+[Install]
+WantedBy=multi-user.target

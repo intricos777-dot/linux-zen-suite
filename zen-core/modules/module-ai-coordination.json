@@ -1,0 +1,28 @@
+{
+  "id": "ai-coordination-server",
+  "path": "modules/ai-coordination-server.ts",
+  "description": "Hardened local MCP gateway for AI agent coordination — binds 127.0.0.1:4141, bearer-token auth, rate-limited JSON-RPC",
+  "runtime": "nodejs",
+  "systemd_unit": "zen-ai-coordination.service",
+  "permissions": "read-only",
+  "hardening": {
+    "bind": "127.0.0.1:4141",
+    "auth": "bearer-token",
+    "rate_limit": "30 req/min",
+    "sandbox": "systemd-nspawn + ProtectSystem=strict",
+    "network": "AF_UNIX + AF_INET only"
+  },
+  "integration_points": {
+    "socket": "/run/zen/ai-coordination.sock",
+    "token_file": "/etc/zen/ai-coordination-token",
+    "shared_memory": "/home/sin/.hermes/shared/",
+    "install_script": "modules/install-ai-coordination.sh"
+  },
+  "mcp_methods": {
+    "ping": "Health check",
+    "agents.list": "List registered agent sessions",
+    "agents.spawn": "Spawn a new coordinated agent (delegates to Hermes gateway)",
+    "shared_memory.write": "Write to shared memory bridge (.hermes/shared/)",
+    "agent_logs.tail": "Tail agent session logs"
+  }
+}

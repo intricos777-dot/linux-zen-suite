@@ -1,0 +1,38 @@
+[Unit]
+Description=Zen AI Coordination Server (local MCP gateway)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Zen Suite module — ships with zen-core/ai-coordination-server.ts
+ExecStart=/usr/bin/node /opt/zen-core/modules/ai-coordination-server.js
+# Bind only to loopback — never exposed externally
+Environment=ZEN_AI_TOKEN_FILE=/etc/zen/ai-coordination-token
+# Minimal privileges
+User=zen
+Group=zen
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/run/zen /var/log/zen
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictNamespaces=true
+LockPersonality=true
+MemoryDenyWriteExecute=false
+RestrictRealtime=true
+RestrictSUIDSGID=true
+RemoveIPC=true
+CapabilityBoundingSet=
+AmbientCapabilities=
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

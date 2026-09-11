@@ -1,0 +1,137 @@
+{
+  "name": "zen-core",
+  "version": "1.1.0",
+  "description": "Shared hardened modules for kali-zen and arch-zen",
+  "author": "intricos777-dot",
+  "license": "MIT",
+  "modules": [
+    {
+      "id": "local-function-guard",
+      "path": "modules/local-function-guard.ts",
+      "description": "TypeScript systemd guard wrapper that restricts system function calls to approved allowlists",
+      "runtime": "nodejs",
+      "systemd_unit": "local-function-guard.service",
+      "permissions": "read-only"
+    },
+    {
+      "id": "bde-patrol",
+      "path": "modules/bde-patrol.ts",
+      "description": "BDE integrity patrol: monitors boot/bootloader/config integrity, writes tamper logs to /var/log/bde/",
+      "runtime": "nodejs",
+      "systemd_unit": "bde-patrol.service",
+      "permissions": "read-write"
+    },
+    {
+      "id": "ollama-hardening",
+      "path": "modules/ollama-hardening.conf",
+      "description": "systemd drop-in that binds ollama to 127.0.0.1 and restricts CORS/network origins",
+      "runtime": "systemd-dropin",
+      "target": "ollama.service.d/hardening.conf"
+    },
+    {
+      "id": "guard-wrapper",
+      "path": "modules/guard-wrapper.sh",
+      "description": "Bash wrapper that instantiates local-function-guard with secure defaults",
+      "runtime": "bash",
+      "target": "/usr/local/bin/zen-guard"
+    },
+    {
+      "id": "bde-patrol-cron",
+      "path": "modules/bde-patrol.cron",
+      "description": "Cron job for BDE patrol (runs every 15 min)",
+      "runtime": "cron",
+      "target": "/etc/cron.d/bde-patrol"
+    },
+    {
+      "id": "firefox-hardening",
+      "path": "modules/firefox/user.js",
+      "description": "Global Firefox hardened preferences",
+      "runtime": "firefox-prefs",
+      "target": "/etc/firefox/policies/"
+    },
+    {
+      "id": "firefox-policies",
+      "path": "modules/firefox/policies.json",
+      "description": "Firefox enterprise policies locked for privacy",
+      "runtime": "firefox-policies",
+      "target": "/etc/firefox/policies/"
+    },
+    {
+      "id": "opera-gx-mods",
+      "path": "modules/opera-gx/mods.conf",
+      "description": "OperaGX global mods and privacy config",
+      "runtime": "opera-conf",
+      "target": "/etc/opt/opera-gx/"
+    },
+    {
+      "id": "ai-coordination-server",
+      "path": "modules/ai-coordination-server.ts",
+      "description": "Hardened local MCP gateway for AI agent coordination — binds 127.0.0.1:4141, bearer-token auth, rate-limited JSON-RPC",
+      "runtime": "nodejs",
+      "systemd_unit": "zen-ai-coordination.service",
+      "permissions": "read-only",
+      "install_script": "modules/install-ai-coordination.sh"
+    },
+    {
+      "id": "intrusion-notify",
+      "path": "modules/intrusion-notify.ts",
+      "description": "Real-time intrusion detection notifications via libnotify + syslog + journald",
+      "runtime": "nodejs",
+      "systemd_unit": "zen-intrusion-notify.service",
+      "permissions": "read-only"
+    },
+    {
+      "id": "vulkan-shader-cache",
+      "path": "modules/vulkan-shader-cache.ts",
+      "description": "Vulkan shader pipeline optimization — persistent SPIR-V cache, pipeline pre-warming, macro permutation generation",
+      "runtime": "nodejs",
+      "systemd_unit": "zen-vulkan-shader-cache.service",
+      "permissions": "read-write",
+      "install_script": "modules/install-vulkan-shader-cache.sh"
+    }
+  ],
+  "integration_points": [
+    "first-boot.sh",
+    "/opt/zen-core",
+    "/usr/local/bin/zen-guard",
+    "/etc/systemd/system/ollama.service.d/hardening.conf",
+    "/etc/cron.d/bde-patrol",
+    "/etc/systemd/system/zen-ai-coordination.service",
+    "/etc/systemd/system/zen-intrusion-notify.service",
+    "/etc/zen/ai-coordination-token",
+    "/var/log/zen/",
+    "/etc/systemd/system/zen-vulkan-shader-cache.service",
+    "/var/cache/zen/shader-cache",
+    "/etc/firefox/policies/policies.json",
+    "/etc/opt/opera-gx/mods.conf"
+  ],
+  "hardening_profile": {
+    "network": {
+      "ollama": ["127.0.0.1:11434"],
+      "ai_coordination": ["127.0.0.1:4141"],
+      "crypto_bot_api": ["127.0.0.1:4123"],
+      "srbminer_api": ["127.0.0.1:21550"],
+      "tor_socks": ["127.0.0.1:9050"],
+      "cors_origins": [
+        "http://localhost:*",
+        "https://localhost:*"
+      ]
+    },
+    "auth": {
+      "crypto_bot": "bearer-token (BOT_API_KEY)",
+      "ai_coordination": "bearer-token (ZEN_AI_TOKEN)",
+      "token_path": "/etc/zen/ai-coordination-token"
+    },
+    "audit": {
+      "bde_patrol_interval_minutes": 15,
+      "log_path": "/var/log/zen/",
+      "intrusion_notifications": true
+    },
+    "vulkan": {
+      "cache_dir": "/var/cache/zen/shader-cache",
+      "max_size_mb": 512,
+      "prewarm_on_boot": true,
+      "shader_stages": ["vertex", "fragment", "compute", "geometry", "tess_control", "tess_eval"]
+    }
+  }
+}
