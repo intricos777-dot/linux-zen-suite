@@ -7,7 +7,7 @@ import http from 'node:http';
 import { URL } from 'node:url';
 
 const HOST = '127.0.0.1';
-const PORT = 4141;
+const PORT = 4142;
 const TOKEN = process.env.ZEN_AI_TOKEN || 'changeme';
 const MAX_BODY = 64 * 1024; // 64 KB
 

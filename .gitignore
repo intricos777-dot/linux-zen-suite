@@ -1,0 +1,75 @@
+# Zen Suite .gitignore
+
+# Build artifacts
+*.iso
+*.iso.sha256sum
+*.iso.gpg
+*.box
+*.qcow2
+*.tar.gz
+*.zip
+
+# Checksums
+*.sha256sum
+*.md5sum
+
+# GPG signatures
+*.gpg
+*.sig
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Editor artifacts
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.project
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+env/
+venv/
+.pytest_cache/
+*.egg-info/
+
+# Node.js
+node_modules/
+package-lock.json
+yarn.lock
+
+# Logs
+*.log
+logs/
+*.log.*
+
+# Secrets
+*.key
+*.pem
+*.der
+*.p12
+*.pfx
+.env
+.env.local
+.env.*.local
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Build workdirs
+arch-zen/work/
+build/
+
+# Backup files
+*.bak
+*.bak-*
+*.backup
+*.orig
