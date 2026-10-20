@@ -1,3 +1,4 @@
+// Watermark: Living_Sin (intricos777-dot) + AI agents (Hermes, Lia, opencode) - collaborative work
 // vulkan-shader-cache.ts
 // Zen Suite module: Vulkan shader pipeline optimization + persistent shader cache
 // Optimizes VK pipeline creation by pre-warming SPIR-V shaders and caching

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Watermark: Living_Sin (intricos777-dot) + AI agents (Hermes, Lia, opencode) - collaborative work
 # install-vulkan-shader-cache.sh — installs the Zen Vulkan Shader Cache
 # Pre-compiles SPIR-V shaders and warms pipeline cache for instant reload.
 set -euo pipefail

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Watermark: Living_Sin (intricos777-dot) + AI agents (Hermes, Lia, opencode) - collaborative work
 # install-ai-coordination.sh — installs the Zen AI Coordination Server
 # as a systemd service, generates a random auth token, and starts it.
 set -euo pipefail

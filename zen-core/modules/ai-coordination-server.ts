@@ -1,3 +1,4 @@
+// Watermark: Living_Sin (intricos777-dot) + AI agents (Hermes, Lia, opencode) - collaborative work
 // ai-coordination-server.ts
 // Zen Suite module: AI Coordination & Communication Server
 // Provides a hardened local MCP gateway for multi-agent coordination.
