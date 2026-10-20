@@ -15,7 +15,7 @@
   "integration_points": {
     "socket": "/run/zen/ai-coordination.sock",
     "token_file": "/etc/zen/ai-coordination-token",
-    "shared_memory": "/home/sin/.hermes/shared/",
+    "shared_memory": "/home/livings/.hermes/shared/",
     "install_script": "modules/install-ai-coordination.sh"
   },
   "mcp_methods": {

@@ -56,7 +56,7 @@ const METHODS: Record<string, (params: any) => Promise<any>> = {
   },
 
   'agent_logs.tail': async (params: { session_id?: string; lines?: number }) => {
-    // Read from /home/sin/.hermes/shared/
+    // Read from /home/livings/.hermes/shared/
     return {
       logs: [],
       session: params.session_id || 'all',
